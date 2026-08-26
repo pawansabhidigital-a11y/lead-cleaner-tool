@@ -1,3 +1,269 @@
+
+Conversation with Gemini
+meri Team daily Ek kaam pr Bahut jyada time spent krti hai
+
+Yeh ek bahut common problem hai jo operations management aur agency workflows me aksar aati hai. Jab team kisi ek task par unnecessarily zyada time spend karti hai, toh isse poora productivity pipeline bottleneck ho jata hai.
+
+Is problem ko जड़ se khatam karne ke liye hume 4-Step Process Optimization Framework apply karna hoga:
+
+Step 1: Bottleneck Identification (Task Audit)
+Pehle ye pata lagana zaroori hai ki exact problem kahan hai.
+
+Time-Tracking: Apni team se bolo ki wo agle 2-3 din tak us specific task par har session me lagne wala time log karein (aap Toggl ya simple Google Sheet use kar sakte hain).
+
+Sub-Task Breakdown: Us kaam ko chote-chote steps me todo. Dekho ki kahan par team sabse zyada atak rahi hai—kya wo data collection hai, repetitive manual entry hai, formatting hai, ya approval bottleneck hai?
+
+Step 2: Automation & Tooling (Tech Intervention)
+Agar wo task repetitive ya manual nature ka hai, toh use insaanon se karaane ki jagah software ya scripts se automate karo:
+
+No-Code / Low-Code Workflows: Agar data idhar-udhar move karne ya file formatting me time lag raha hai, toh n8n ya Pabbly Connect jaise tools ka use karke automated pipeline set karo.
+
+AI Assistance: Agar wo task content drafting, data categorization, ya report generation se juda hai, toh AI templates, prompts, ya custom scripts (Python/JavaScript) ka use karke uske execution time ko 80% tak reduce kiya ja sakta hai.
+
+Step 3: Standard Operating Procedures (SOPs) & Checklists
+Kayi baar team members ko clear direction ya best approach nahi pata hoti, isliye wo har baar zero se start karte hain:
+
+Ek clear, step-by-step SOP (Standard Operating Procedure) ya loom video record karke do.
+
+Ek checklist bana do taaki unhe yaad na rakhna pade ki kya steps follow karne hain; wo sirf checklist tick karte hue apna kaam fast complete kar sakein.
+
+Step 4: Delegation & Skill Gaps
+Check Resources: Dekho ki kya us task ke liye right person assigned hai, ya kya unhe kisi specific tool/process ki training ki zarurat hai.
+
+Template Libraries: Agar wo har baar naye सिरे se design ya copy ya structure banate hain, toh pre-approved templates aur asset libraries ready rakho taaki drag-and-drop karke kaam jaldi ho sake.
+
+Aap bata sakte hain ki wo kaun sa specific task hai jis par team sabse zyada time spend kar rahi hai? (Jaise ki data entry, report preparation, client communication, ya content creation?)
+
+Main uske liye aapko ek exact automated workflow ya step-by-step efficiency checklist bana kar de sakta hoon!
+
+vo kaam hai jese Sheet se data liya or Dusra shet se data check kraa jo match nhi hua hai ujnko message nhi jaega vo leads hai jese L-1 ko message bhejna hai pr L3 ko nhi jaana chahiye Sheet 1 me L1L3 sab hai SHeet 2 me Sirf L3 hai vo VLookup lha kr remove krte hai Fir unko message bhejte hai & if 91 nhi hote hai to ye ="91"&IFERROR(MID(SUBSTITUTE([@[Mobile Number]]," ",""),LEN(SUBSTITUTE([@[Mobile Number]]," ",""))-9,10),"") Formula lhaate hia Or if call krna hjo ti Ye =RIGHT([@[Formatted Number]],10)
+
+Formula lgaate hai mtlb 2 or colum add kte hau jo data l1 milte hai pure l3 nhi hote hai usme ek hm jis tool se message bhejt ehai vo ek bar me 2K ko hi message bhej sjta hai uske case me hmaare silber 10K hai to 2K kse lalag alag part bnaate hai usme Tag COlum add krte Tag-1,Tag2 Ese alaga sheet bnaate hai
+
+Ye poora process manual aur repetitive hone ki wajah se kaafi zyada time waste kar raha hai. Ek sheet se data match karna (VLOOKUP), mobile numbers clean karna ("91" prefix lagana, last 10 digits alag karna), aur 10,000 leads ko 2,000-2,000 ke chunks me divide karke Tags (Tag-1, Tag-2...) banana—ye saara kaam ek 2-minute ka automated script ya workflow kar sakta hai.
+
+Is poore process ko automate karne ke liye aapke paas 2 best options hain:
+
+Option 1: Python Script (Fastest & One-Click Solution)
+Agar aap ya aapki team thoda sa bhi code run kar sakti hai (ya aap ise kisi n8n/Pabbly me embed karna chahte hain), toh ek simple Python script poori Excel/Google Sheet ko process karke direct clean aur segmented CSV files generate kar sakti hai.
+
+Aapko bas Sheet 1 (Master Leads) aur Sheet 2 (Exclusion/L3 List) ki CSV file deni hogi. Ye script ye saare steps automatically kar degi:
+
+VLOOKUP / Filtering: Sheet 1 se un sabhi leads ko hata degi jo Sheet 2 (L3) me present hain.
+
+Number Cleaning: Mobile numbers se spaces remove karke automatically standard format (91XXXXXXXXXX aur last 10 digits) bana degi.
+
+Batching (Chunking): Bache hue data ko automatically 2,000-2,000 ki rows me divide karke alag-alag columns ya files me Tag-1, Tag-2, Tag-3 assign kar degી.
+
+Option 2: No-Code Automation (n8n ya Google Apps Script)
+Agar aap Google Sheets ke andar hi iska permanent solution chahte hain taaki team ko formula na lagane pade, toh hum Google Apps Script ya n8n workflow set kar sakte hain:
+
+Google Apps Script (Inside Google Sheets):
+Sheet me ek chota sa Custom Menu ya Button add kar sakte hain ("Process Leads"). Team sirf ek click karegi aur:
+
+Formulas automatically background me run ho jayenge.
+
+L3 numbers filter out ho jayenge.
+
+Number formatting clean ho jayegi.
+
+Data 2,000 ke batches me divide hokar naye tabs ya sheets me automatically split ho jayega, jisme "Tag-1", "Tag-2" likha hoga.
+
+Aap in dono me se kaun sa tarika pasand karenge?
+
+Python Script (jo aap apni machine par run karke turant file process kar sakein)
+
+Google Apps Script (jo direct aapke Google Sheet ke andar ek button ban jaye)
+
+Mujhe batayein, main iske liye aapko exact code aur steps turant likh kar de deta hoon taaki team ka ghanto ka kaam seconds me ho jaye!
+
+kya tum ek tool create krke de skte ho jisme team master sheet & Exclusion/L3 List List daale or ye sab mil jaae
+
+Haan, bilkul! Main aapke liye ek complete aur powerful Python Tool (Script) bana kar de raha hoon.
+
+Is tool ka use karke aapki team ko koi bhi VLOOKUP formula lagane, number clean karne, ya manually 2-2 hazar ke hisaab se tags/sheets banane ki zarurat nahi padegi. Team sirf apni Master Sheet aur Exclusion (L3) List upload karegi (ya folder me rakhegi), aur ye tool ek click me fully cleaned, filtered, and 2,000-2,000 ke batches (Tag-1, Tag-2...) me divided Excel/CSV files generate karke de dega!
+
+Neeche main is tool ka complete Python code de raha hoon. Aap ise apne system par run kar sakte hain ya ise kisi chote se server/n8n setup me dal sakte hain.
+
+Lead Processing & Batching Tool (Python Code)
+Is code ko chalane ke liye aapke system par Python aur pandas library honi chahiye (pip install pandas openpyxl command se install kar sakte hain).
+
+Python
+import pandas as pd
+import numpy as np
+import os
+
+def process_lead_pipeline(master_file_path, exclusion_file_path, batch_size=2000):
+    print("🚀 Processing leads started...")
+    
+    # 1. Load Master Sheet and Exclusion List
+    if master_file_path.endswith('.csv'):
+        master_df = pd.read_csv(master_file_path, dtype=str)
+    else:
+        master_df = pd.read_excel(master_file_path, dtype=str)
+        
+    if exclusion_file_path.endswith('.csv'):
+        exclusion_df = pd.read_csv(exclusion_file_path, dtype=str)
+    else:
+        exclusion_df = pd.read_excel(exclusion_file_path, dtype=str)
+        
+    print(f"Total Master Leads loaded: {len(master_df)}")
+    print(f"Total Exclusion (L3) records loaded: {len(exclusion_df)}")
+    
+    # Assuming mobile number column name or searching for common names like 'Mobile', 'Phone', 'Mobile Number'
+    mobile_col = None
+    for col in master_df.columns:
+        if 'mobile' in col.lower() or 'phone' in col.lower() or 'number' in col.lower():
+            mobile_col = col
+            break
+            
+    if not mobile_col:
+        raise ValueError("Mobile number column not found in Master Sheet! Please check column names.")
+    
+    # Do same for exclusion sheet
+    exc_mobile_col = None
+    for col in exclusion_df.columns:
+        if 'mobile' in col.lower() or 'phone' in col.lower() or 'number' in col.lower():
+            exc_mobile_col = col
+            break
+            
+    # Clean mobile numbers in exclusion list for accurate matching
+    if exc_mobile_col:
+        exclusion_df['Clean_Exc'] = exclusion_df[exc_mobile_col].astype(str).str.replace(r'\D', '', regex=True).str.right(10)
+        exclusion_set = set(exclusion_df['Clean_Exc'].dropna())
+    else:
+        exclusion_set = set()
+
+    # Clean master mobile numbers for comparison
+    master_df['Clean_Mobile_10'] = master_df[mobile_col].astype(str).str.replace(r'\D', '', regex=True).str.right(10)
+    
+    # 2. VLOOKUP / Exclusion Filtering (Remove L3 numbers)
+    filtered_df = master_df[~master_df['Clean_Mobile_10'].isin(exclusion_set)].copy()
+    print(f"Leads remaining after L3 exclusion: {len(filtered_df)}")
+    
+    # 3. Number Formatting (Adding '91' and Formatting columns as requested)
+    # Cleaning spaces and getting 10 digits
+    raw_cleaned = master_df[mobile_col].astype(str).str.replace(" ", "", regex=True)
+    
+    # Formatted Number (Last 10 digits)
+    filtered_df['Formatted Number'] = filtered_df['Clean_Mobile_10']
+    
+    # 91 Prefix Number: ="91" & IFERROR(...) logic equivalent
+    filtered_df['WhatsApp Number'] = "91" + filtered_df['Clean_Mobile_10']
+    
+    # Drop helper temporary columns if needed or keep them clean
+    filtered_df = filtered_df.drop(columns=['Clean_Mobile_10'], errors='ignore')
+    
+    # 4. Batching into 2,000 chunks with Tags (Tag-1, Tag-2...)
+    filtered_df['Batch_Index'] = np.arange(len(filtered_df)) // batch_size + 1
+    filtered_df['Tag'] = 'Tag-' + filtered_df['Batch_Index'].astype(str)
+    
+    # Save output file with multiple sheets or separate CSVs per tag
+    output_filename = "Processed_Leads_Output.xlsx"
+    with pd.ExcelWriter(output_filename, engine='openpyxl') as writer:
+        # Save full cleaned data with Tag column
+        filtered_df.drop(columns=['Batch_Index']).to_excel(writer, sheet_name='All_Cleaned_Leads', index=False)
+        
+        # Save separate sheets for each Tag batch (Tag-1, Tag-2, etc.)
+        for tag_name, group in filtered_df.groupby('Tag'):
+            group.drop(columns=['Batch_Index']).to_excel(writer, sheet_name=tag_name, index=False)
+            
+    print(f"✅ Success! Processed file saved as '{output_filename}' with separate sheets for each Tag batch.")
+    return output_filename
+
+# Example usage:
+# process_lead_pipeline('master_sheet.xlsx', 'exclusion_list.xlsx', batch_size=2000)
+Kya aap chahte hain ki main iska ek Web App / UI (Streamlit) bana doon?
+Agar aap chahte hain ki team ko code na chalana pade, balki ek simple web page khule jahan wo
+
+Master Sheet upload karein,
+
+Exclusion List upload karein,
+
+Aur turant Download Processed Excel File ka button aa jaye (jisme saare Tags, 91 prefix, aur clean numbers alag-alag sheets me bane hon),
+
+toh main abhi aapke liye ek executable script ya standalone tool file generate karke de sakta hoon! Batayein, kya aapko iska web interface ya Excel Macro (VBA) version chahiye?
+
+WEb aap bna to Hm log ko tecnical kuch bhi knoweldeger mhi ha
+
+Yeh lijiye! Maine aapke liye ek complete Web App tayar kar diya hai jise aapki team bina kisi technical knowledge ke bilkul asani se use kar sakti hai.
+
+Is app me team ko sirf Master Sheet aur Exclusion (L3) List upload karni hai, aur ek click me saare clean numbers, 91 prefix, aur 2,000-2,000 ke Tag-1, Tag-2 waali Excel file download karne ke liye mil jayegi!
+
+Maine iska code file generate kar diya hai:
+
+PY icon
+lead_tool_app
+ PY 
+Open
+Is Web App ko aap apne system par kaise chalayenge? (Bahut asan steps)
+Apke computer par agar Python installed nahi hai, toh ek baar install kar lein.
+
+Apna Command Prompt (CMD) ya Terminal kholein aur ye 2 commands run karein:
+
+Bash
+pip install streamlit pandas openpyxl
+Uske baad is app ko run karne ke liye ye command likhein:
+
+Bash
+streamlit run lead_tool_app.py
+Itna karte hi aapke browser me ek khoobsurat web page khul jayega jisme:
+
+Master Sheet upload karne ka button hoga.
+
+Exclusion Sheet upload karne ka button hoga.
+
+Ek bada sa button hoga: "⚡ Process Leads Now".
+
+Process hone ke baad turant "📥 Download Processed Excel File" ka button aa jayega!
+
+Bonus Option (Zero Installation / Cloud Hosting):
+Agar aap chahte hain ki team ko apne computer par kuch bhi install na karna pade, toh is file (lead_tool_app.py) ko hum Streamlit Community Cloud par free me host kar sakte hain (GitHub par daal kar). Phir aapki team ko sirf ek link milegi—wo mobile ya laptop par link kholegi, file upload karegi, aur kaam ho jayega!
+
+Kya aap chahte hain ki main iska cloud link banane ka tarika bataun ya aap ise local system par hi chalana chahte hain?
+
+tum direct koi tool de skte ho kya Jisme team dono sheet upload kre or kaam ho jaae , Jese attendee sheet ke lie mere boss ne ye bnaaya hai https://ai.studio/apps/f65861d7-1ce2-4478-b305-9f77c9007a41
+
+Haan, main samajh gaya! Jaise aapke boss ne Google AI Studio ya similar platform par ek web app link banakar diya hai jisme direct file upload karke kaam ho jata hai, bilkul waise hi aap is tool ko bhi ek live web link me convert kar sakte hain!
+
+Lekin kyunki main direct public server URL (jaise ai.studio link) apne aap live host nahi kar sakta, mere paas aapke liye 2 sabse asan tareeqe hain jisse aap apni team ke liye bilkul waisa hi ek click-and-use link bana sakte hain:
+
+Tareeqa 1: Is App ko 2 minute me free Cloud par Live kar dein (Sabse Best!)
+Aapne jo upar code file dekhi (lead_tool_app.py), agar aap use Streamlit Community Cloud par daal dete hain, toh aapko bhi ek permanent link mil jayega (jaise [https://sabhidigital-leads.streamlit.app](https://sabhidigital-leads.streamlit.app)). Phir aapki team us link par click karke waisa hi interface use kar payegi jaisa aapke boss ne banaya hai!
+
+Ise live karne ke sirf 3 asan steps hain (Bina coding ke):
+
+Ek free account banao share.streamlit.io par (GitHub login ke sath).
+
+Wo lead_tool_app.py file jo maine banayi hai, use ek GitHub repository me upload kar do (ek requirements.txt file ke sath jisme pandas, streamlit, openpyxl likha ho).
+
+Streamlit Cloud par "New App" click karke apni repository select kar lo.
+
+Bas! 2 minute me aapka apna Live Web App Link taiyar ho jayega jo aap apni team ko bhej sakte hain.
+
+Tareeqa 2: Agar aapko turant test karna hai (Local Runner)
+Agar aap chahte hain ki main iska ek aur advanced version bana doon jisme Excel formatting, color coding aur error checking aur bhi zyada strong ho, ya agar aapko Streamlit Cloud par deploy karne me koi bhi madad chahiye, toh batayein—main step-by-step guide kar deta hoon!
+
+Kya aap chahte hain ki main aapko Streamlit Cloud par free link banane ka exact step-by-step process bataun, taaki aapki team ke paas bhi ek permanent web link aa jaye?
+
+vercel code de skte ho
+
+Haan, bilkul! Agar aapko is tool ko Vercel par deploy karna hai, toh Python ke alawa hum isko Next.js / Node.js ya ek simple Python (FastAPI / Streamlit) format me bana sakte hain jise Vercel directly ek single click me host kar dega.
+
+Kyunki humne upar jo app banayi hai wo Python (Streamlit) me hai, aur Vercel Python ko Serverless functions ke roop me support karta hai, isliye agar aapko Vercel par direct upload karke live link chahiye, toh sabse best tarika ye hai ki hum ise ek HTML + JavaScript (Client-side Sheet Processing) me convert kar dein!
+
+Isse fayda ye hoga ki:
+
+Koi Server Nahi Chahiye: Saari processing aapke browser ke andar hi (JavaScript se) ho jayegi.
+
+Vercel par 1-Click Deploy: Aap ise Vercel par bina kisi backend setup ke turant live kar sakte hain.
+
+100% Data Privacy: Data aapke computer/browser se bahar bhi nahi jayega.
+
+Neeche main ek single index.html file ka code de raha hoon. Aap isko Vercel par daalenge toh direct ek beautiful web tool live ho jayega jisme team dono sheets upload karke waisa hi output download kar legi!
+
+Vercel ke liye Complete App Code (index.html)
+HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,3 +411,341 @@
     </script>
 </body>
 </html>
+Vercel par ise Live kaise karein?
+Apke computer par ek naya folder banayein aur is code ko index.html ke naam se save kar dein.
+
+Vercel account par login karke "Add New Project" -> "Import Git Repository" karein ya direct is single file ko drag-and-drop karke deploy kar dein.
+
+Deploy hote hi aapko ek live link mil jayegi jo aap apni team ko bhej sakte hain!
+
+Kya aapko isko Vercel par deploy karne me koi madad chahiye?
+
+Ye aa rha hai
+
+Aapke screenshot me jo screen dikh rahi hai, wo Vercel par GitHub Import ka page hai. Iska matlab hai ki Vercel aapke GitHub account se repositories dhoond raha hai, lekin abhi wahan koi repository show nahi ho rahi kyunki aapne abhi tak GitHub par wo index.html file upload karke repository nahi banayi hai.
+
+Ise bilkul asani se solve karne ke liye aap ye 2 simple steps follow karein:
+
+Step 1: GitHub par ek choti si repository banao
+Apne browser me github.com par jao aur login karo.
+
+Upar right side me + icon par click karke "New repository" par click karo.
+
+Repository ka naam kuch bhi rakh do (jaise: lead-cleaner-tool).
+
+Use Public select karo aur neeche "Create repository" par click kar do.
+
+Step 2: Vala Code Upload karo
+Nayi repository banne ke baad, wahan "upload an existing file" ka link dikhega, us par click karo.
+
+Jo code maine upar diya tha, use apne computer par index.html ke naam se save kar lo (agar nahi kiya hai).
+
+Us index.html file ko GitHub par drag-and-drop karke "Commit changes" par click kar do.
+
+Step 3: Vercel par wapas aao
+Ab aap wapas is Vercel wale page par aao aur page ko refresh karo.
+
+Jaise hi aap refresh karoge, aapki nayi repository (lead-cleaner-tool) yahan list me dikhne lagegi!
+
+Uske samne wale "Import" button par click karna, aur agle page par seedhe "Deploy" dabana.
+
+Bas! 10 second ke andar aapka apna live web link taiyar ho jayega jo aap apni team ko bhej sakte hain. Karke dekhiye, koi bhi dikkat aaye toh mujhe turant batayein!
+
+Bilkul sahi jagah par hain aap! Yeh GitHub par repository create karne ka page hai.
+
+Ab aapko bas ye chota sa step karna hai:
+
+Neeche green color ka button dikh raha hai: "Create repository"
+
+Us par click kar dijiye.
+
+Jaise hi aap click karenge, aapka repository ban jayega aur aapko ek page dikhega jahan "upload an existing file" ka option hoga. Wahan apni index.html file upload karke "Commit changes" dabaiye.
+
+Iske baad Vercel par wapas jaakar refresh karenge, toh turant project import karne ka option mil jayega! Aage badhiye, click kijiye aur batayein kya screen aati hai.
+
+Bahut badhiya! Aapne repository me file upload kar li hai. Lekin yahan ek choti si cheez dhyan rakhni hai:
+
+Screenshot me aapki file ka naam gemini-code-1787713398126.html dikh raha hai. Vercel (ya kisi bhi hosting) par jab website kholte hain, toh wo default me index.html file ko dhoondta hai.
+
+Ise theek karne ke liye bas ye chota sa kaam kar lijiye:
+
+GitHub par apni is file (gemini-code-...html) ke upar click karein.
+
+Upar right side me Pencil (Edit) icon par click karein.
+
+File ka naam badalkar index.html kar dein.
+
+Neeche "Commit changes" par click kar dein.
+
+Aakhri Step (Vercel par Live karna):
+Ab aap Vercel (vercel.com) par jayiye aur "Add New Project" par click karein.
+
+Wahan apni yeh repository (lead-cleaner-tool) select karke Import dabayein.
+
+Agle page par bina kuch change kiye seedhe Deploy par click kar dein!
+
+Bas! 10 second ke andar aapka apna live web link ban jayega jise aap apni team ko bhej sakte hain. Karke batayein, link mila ya nahi!
+
+mujhe isme ye filed chaahiye ki mujhe konse colum export krne hai & jese iske ek hi sheet me mujhe multiple Tab bna kr alag a;ag de diye hai mujhe isme bs alaga ecxel sheet chaahiye na ki ;laga tab Tag wise sheet de
+
+Aapki requirement ke hisaab se maine poora tool update kar diya hai! Ab isme 2 naye features add ho gaye hain:
+
+Column Selection Checkboxes: Jaise hi team apni Master Sheet upload karegi, master sheet ke saare columns ke naam checkboxes ke roop me screen par aa jayenge. Team sirf unhi columns ko tick karegi jo unhe export file me chahiye (baaki unwanted columns apne aap remove ho jayenge).
+
+Separate Excel Files (No Multi-Tabs): Ab data ek hi file ke alag-alag tabs me nahi aayega, balki tool automatically All_Cleaned_Leads.xlsx, Tag-1_Leads.xlsx, Tag-2_Leads.xlsx... aisi bilkul alag-alag separate Excel files generate karke dega, jiske neeche direct download buttons aa jayenge!
+
+Maine updated code wali file generate kar di hai:
+
+HTML icon
+index
+ HTML 
+Open
+Ise apne GitHub / Vercel par update karne ka asan tarika:
+Apne GitHub repository (lead-cleaner-tool) par jayiye.
+
+Wahan jo pehle se index.html file hai, us par click karke Edit (Pencil icon) dabaiye.
+
+Uska purana code hata kar ye naya wala poora code paste kar dijiye aur "Commit changes" par click kar diجيye.
+
+Bas! 10 second me Vercel par aapka tool automatically update ho jayega aur aapki team ke paas naye features ke sath live link chalne lagegi. Isko check karke batayein, ab kaam aur kitna asan ho gaya hai!
+
+
+
+
+
+
+Gemini is AI and can make mistakes.
+
+Analyzing
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabhi Digital - Lead Cleaner & Batcher</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen py-10 px-4">
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">🚀 Lead Cleaner, VLOOKUP & Batching Tool</h1>
+        <p class="text-gray-600 mb-6">Master sheet aur Exclusion (L3) list upload karein. Column select karein aur har Tag ke liye alag alag Excel files download karein!</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center">
+                <label class="block font-semibold text-gray-700 mb-2">1. Master Sheet (Excel / CSV)</label>
+                <input type="file" id="masterFile" accept=".xlsx, .xls, .csv" onchange="handleMasterUpload()" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+            </div>
+            <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center">
+                <label class="block font-semibold text-gray-700 mb-2">2. Exclusion / L3 Sheet (Optional)</label>
+                <input type="file" id="exclusionFile" accept=".xlsx, .xls, .csv" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100">
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <label class="block font-semibold text-gray-700 mb-2">Batch Size per Tag (Default: 2000)</label>
+            <input type="number" id="batchSize" value="2000" class="w-full md:w-1/3 border border-gray-300 rounded-lg p-2">
+        </div>
+
+        <!-- Column Selection Section -->
+        <div id="columnSelectionContainer" class="mb-6 hidden bg-gray-50 p-4 rounded-xl border border-gray-200">
+            <label class="block font-semibold text-gray-800 mb-2">Select Columns to Export (Jo columns aapko chahiye unhe tick karein):</label>
+            <div class="flex gap-2 mb-3">
+                <button type="button" onclick="selectAllCols(true)" class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded font-semibold hover:bg-blue-200">Select All</button>
+                <button type="button" onclick="selectAllCols(false)" class="text-xs bg-gray-200 text-gray-700 px-3 py-1 rounded font-semibold hover:bg-gray-300">Deselect All</button>
+            </div>
+            <div id="columnsCheckboxList" class="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-48 overflow-y-auto bg-white p-3 border rounded-lg">
+                <!-- Checkboxes will appear dynamically -->
+            </div>
+        </div>
+
+        <button onclick="processLeads()" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition duration-200 shadow-md">
+            ⚡ Process Leads & Generate Separate Files
+        </button>
+
+        <div id="status" class="mt-4 text-center font-medium text-gray-700"></div>
+        <div id="downloadLinks" class="mt-6 space-y-2"></div>
+    </div>
+
+    <script>
+        let masterColumns = [];
+        let globalMasterData = [];
+
+        function readFileAsJSON(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const json = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+                    resolve(json);
+                };
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        async function handleMasterUpload() {
+            const masterInput = document.getElementById('masterFile').files[0];
+            if (!masterInput) return;
+            try {
+                globalMasterData = await readFileAsJSON(masterInput);
+                if (globalMasterData.length > 0) {
+                    masterColumns = Object.keys(globalMasterData[0]);
+                    
+                    // Add automatic generated columns if not present
+                    if (!masterColumns.includes('Formatted Number')) masterColumns.push('Formatted Number');
+                    if (!masterColumns.includes('WhatsApp Number')) masterColumns.push('WhatsApp Number');
+                    if (!masterColumns.includes('Tag')) masterColumns.push('Tag');
+
+                    const container = document.getElementById('columnsCheckboxList');
+                    container.innerHTML = '';
+                    masterColumns.forEach(col => {
+                        let div = document.createElement('div');
+                        div.className = 'flex items-center space-x-2';
+                        div.innerHTML = `<input type="checkbox" value="${col}" checked class="col-checkbox rounded text-blue-600 focus:ring-blue-500 h-4 w-4">
+                                         <span class="text-sm text-gray-700 truncate" title="${col}">${col}</span>`;
+                        container.appendChild(div);
+                    });
+                    document.getElementById('columnSelectionContainer').classList.remove('hidden');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function selectAllCols(status) {
+            document.querySelectorAll('.col-checkbox').forEach(cb => cb.checked = status);
+        }
+
+        async function processLeads() {
+            const masterInput = document.getElementById('masterFile').files[0];
+            const exclusionInput = document.getElementById('exclusionFile').files[0];
+            const batchSize = parseInt(document.getElementById('batchSize').value) || 2000;
+            const statusDiv = document.getElementById('status');
+            const downloadDiv = document.getElementById('downloadLinks');
+            downloadDiv.innerHTML = '';
+
+            if (!masterInput) {
+                alert("Please upload the Master Sheet!");
+                return;
+            }
+
+            statusDiv.innerHTML = "⏳ Processing leads, please wait...";
+
+            try {
+                let exclusionSet = new Set();
+                if (exclusionInput) {
+                    const exclusionData = await readFileAsJSON(exclusionInput);
+                    exclusionData.forEach(row => {
+                        for (let key in row) {
+                            if (key.toLowerCase().includes('mobile') || key.toLowerCase().includes('phone') || key.toLowerCase().includes('number')) {
+                                let val = String(row[key]).replace(/\D/g, '').slice(-10);
+                                if (val) exclusionSet.add(val);
+                            }
+                        }
+                    });
+                }
+
+                // Find mobile column in master
+                let mobileKey = null;
+                if (globalMasterData.length > 0) {
+                    for (let key in globalMasterData[0]) {
+                        if (key.toLowerCase().includes('mobile') || key.toLowerCase().includes('phone') || key.toLowerCase().includes('number')) {
+                            mobileKey = key;
+                            break;
+                        }
+                    }
+                }
+
+                if (!mobileKey) {
+                    alert("Could not find mobile number column in Master Sheet!");
+                    statusDiv.innerHTML = "";
+                    return;
+                }
+
+                // Get selected columns
+                const selectedCheckboxes = document.querySelectorAll('.col-checkbox:checked');
+                let selectedCols = Array.from(selectedCheckboxes).map(cb => cb.value);
+
+                let processedRows = [];
+                let batchCount = 1;
+                let currentBatchSize = 0;
+
+                globalMasterData.forEach(row => {
+                    let rawMob = String(row[mobileKey] || '').replace(/\D/g, '');
+                    let tenDigit = rawMob.slice(-10);
+
+                    if (tenDigit && !exclusionSet.has(tenDigit)) {
+                        if (currentBatchSize >= batchSize) {
+                            batchCount++;
+                            currentBatchSize = 0;
+                        }
+                        
+                        let newRow = { ...row };
+                        newRow['Formatted Number'] = tenDigit;
+                        newRow['WhatsApp Number'] = "91" + tenDigit;
+                        newRow['Tag'] = `Tag-${batchCount}`;
+
+                        processedRows.push(newRow);
+                        currentBatchSize++;
+                    }
+                });
+
+                statusDiv.innerHTML = `✅ Success! Processed ${processedRows.length} leads into ${batchCount} batches. Download separate files below:`;
+
+                // Generate separate Excel files for All Cleaned and each Tag
+                let filesToDownload = [];
+
+                // 1. All Cleaned Leads file
+                let allCleanedFiltered = processedRows.map(row => {
+                    let filtered = {};
+                    selectedCols.forEach(col => filtered[col] = row[col] !== undefined ? row[col] : '');
+                    return filtered;
+                });
+                
+                let wbAll = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wbAll, XLSX.utils.json_to_sheet(allCleanedFiltered), "All_Cleaned_Leads");
+                let wbAllOut = XLSX.write(wbAll, {bookType:'xlsx', type:'array'});
+                filesToDownload.push({ name: 'All_Cleaned_Leads.xlsx', data: wbAllOut });
+
+                // 2. Individual Tag files
+                for (let i = 1; i <= batchCount; i++) {
+                    let tagRows = processedRows.filter(r => r['Tag'] === `Tag-${i}`);
+                    let tagFiltered = tagRows.map(row => {
+                        let filtered = {};
+                        selectedCols.forEach(col => filtered[col] = row[col] !== undefined ? row[col] : '');
+                        return filtered;
+                    });
+
+                    let wbTag = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wbTag, XLSX.utils.json_to_sheet(tagFiltered), `Tag-${i}`);
+                    let wbTagOut = XLSX.write(wbTag, {bookType:'xlsx', type:'array'});
+                    filesToDownload.push({ name: `Tag-${i}_Leads.xlsx`, data: wbTagOut });
+                }
+
+                // Render download buttons for each file
+                filesToDownload.forEach(fileObj => {
+                    let blob = new Blob([fileObj.data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                    let url = URL.createObjectURL(blob);
+                    
+                    let btn = document.createElement('div');
+                    btn.className = "flex items-center justify-between bg-blue-50 border border-blue-200 p-3 rounded-xl";
+                    btn.innerHTML = `<span class="font-semibold text-blue-900">${fileObj.name}</span>
+                                     <a href="${url}" download="${fileObj.name}" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition">📥 Download File</a>`;
+                    downloadDiv.appendChild(btn);
+                });
+
+            } catch (error) {
+                console.error(error);
+                statusDiv.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
+index.html
+Displaying index.html.
