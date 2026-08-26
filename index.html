@@ -9,8 +9,8 @@
 </head>
 <body class="bg-gray-50 min-h-screen py-10 px-4">
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">🚀 Advanced Lead Cleaner, VLOOKUP & Batching Tool</h1>
-        <p class="text-gray-600 mb-6">Master sheet, L3 Exclusion sheet, aur Red Leads/DND sheet upload karein. Date filter aur column selection ke sath alag-alag Tag files download karein!</p>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">🚀 Advanced Lead Cleaner (Mobile + Email Check)</h1>
+        <p class="text-gray-600 mb-6">Master sheet, L3 Exclusion sheet, aur Red Leads/DND sheet upload karein. Tool mobile aur email dono se cross-check karke clean files dega!</p>
 
         <!-- File Uploads Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -57,7 +57,7 @@
         </div>
 
         <button onclick="processLeads()" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition duration-200 shadow-md">
-            ⚡ Process Leads & Generate Separate Files
+            ⚡ Process Leads (Mobile + Email Check)
         </button>
 
         <div id="status" class="mt-4 text-center font-medium text-gray-700"></div>
@@ -116,27 +116,35 @@
             document.querySelectorAll('.col-checkbox').forEach(cb => cb.checked = status);
         }
 
-        // Helper to extract clean 10-digit mobile number for exclusion matching
-        async function getExclusionSet(fileInput) {
-            let excSet = new Set();
-            if (!fileInput) return excSet;
+        // Helper to extract both Mobile sets and Email sets for exclusion
+        async function getExclusionData(fileInput) {
+            let excMobiles = new Set();
+            let excEmails = new Set();
+            if (!fileInput) return { excMobiles, excEmails };
+            
             const data = await readFileAsJSON(fileInput);
             data.forEach(row => {
                 for (let key in row) {
-                    if (key.toLowerCase().includes('mobile') || key.toLowerCase().includes('phone') || key.toLowerCase().includes('number')) {
-                        let val = String(row[key]).replace(/\D/g, '').slice(-10);
-                        if (val) excSet.add(val);
+                    let kLower = key.toLowerCase();
+                    let val = String(row[key] || '').trim();
+                    if (!val) continue;
+
+                    if (kLower.includes('mobile') || kLower.includes('phone') || kLower.includes('number')) {
+                        let cleanMob = val.replace(/\D/g, '').slice(-10);
+                        if (cleanMob) excMobiles.add(cleanMob);
+                    }
+                    if (kLower.includes('email') || kLower.includes('mail')) {
+                        let cleanEmail = val.toLowerCase();
+                        excEmails.add(cleanEmail);
                     }
                 }
             });
-            return excSet;
+            return { excMobiles, excEmails };
         }
 
-        // Helper to parse date values from excel/strings securely
         function parseExcelDate(val) {
             if (!val) return null;
             if (typeof val === 'number') {
-                // Excel serial date conversion
                 return new Date(Math.round((val - (25567 + 2)) * 86400 * 1000));
             }
             let d = new Date(val);
@@ -153,7 +161,7 @@
             const toDateVal = document.getElementById('toDate').value;
             const fromDate = fromDateVal ? new Date(fromDateVal) : null;
             const toDate = toDateVal ? new Date(toDateVal) : null;
-            if (toDate) toDate.setHours(23, 59, 59, 999); // End of day
+            if (toDate) toDate.setHours(23, 59, 59, 999);
 
             const statusDiv = document.getElementById('status');
             const downloadDiv = document.getElementById('downloadLinks');
@@ -164,21 +172,28 @@
                 return;
             }
 
-            statusDiv.innerHTML = "⏳ Processing leads with exclusion & date filters...";
+            statusDiv.innerHTML = "⏳ Processing leads with Mobile & Email dual-check...";
 
             try {
-                // 1. Build Exclusion sets for L3 and Red Leads
-                const l3Set = await getExclusionSet(exclusionInput);
-                const redSet = await getExclusionSet(redLeadsInput);
+                const l3Data = await getExclusionData(exclusionInput);
+                const redData = await getExclusionData(redLeadsInput);
 
-                // Find mobile column and date column in master
+                // Combine L3 and Red leads into unified exclusion sets
+                let globalExcludedMobiles = new Set([...l3Data.excMobiles, ...redData.excMobiles]);
+                let globalExcludedEmails = new Set([...l3Data.excEmails, ...redData.excEmails]);
+
                 let mobileKey = null;
+                let emailKey = null;
                 let dateKey = null;
+
                 if (globalMasterData.length > 0) {
                     for (let key in globalMasterData[0]) {
                         let kLower = key.toLowerCase();
                         if (!mobileKey && (kLower.includes('mobile') || kLower.includes('phone') || kLower.includes('number'))) {
                             mobileKey = key;
+                        }
+                        if (!emailKey && (kLower.includes('email') || kLower.includes('mail'))) {
+                            emailKey = key;
                         }
                         if (!dateKey && (kLower.includes('date') || kLower.includes('time') || kLower.includes('created'))) {
                             dateKey = key;
@@ -202,13 +217,14 @@
                 globalMasterData.forEach(row => {
                     let rawMob = String(row[mobileKey] || '').replace(/\D/g, '');
                     let tenDigit = rawMob.slice(-10);
+                    let rowEmail = emailKey ? String(row[emailKey] || '').trim().toLowerCase() : '';
 
                     if (tenDigit) {
-                        // Check if present in L3 or Red Leads
-                        let isExcluded = l3Set.has(tenDigit) || redSet.has(tenDigit);
+                        // Check exclusion by EITHER Mobile OR Email
+                        let isExcludedByMobile = tenDigit && globalExcludedMobiles.has(tenDigit);
+                        let isExcludedByEmail = rowEmail && globalExcludedEmails.has(rowEmail);
 
-                        if (!isExcluded) {
-                            // Check date filter if provided and date column exists
+                        if (!isExcludedByMobile && !isExcludedByEmail) {
                             let passDateFilter = true;
                             if ((fromDate || toDate) && dateKey) {
                                 let rowDate = parseExcelDate(row[dateKey]);
@@ -240,7 +256,6 @@
 
                 let filesToDownload = [];
 
-                // All Cleaned file
                 let allCleanedFiltered = processedRows.map(row => {
                     let filtered = {};
                     selectedCols.forEach(col => filtered[col] = row[col] !== undefined ? row[col] : '');
@@ -251,7 +266,6 @@
                 XLSX.utils.book_append_sheet(wbAll, XLSX.utils.json_to_sheet(allCleanedFiltered), "All_Cleaned_Leads");
                 filesToDownload.push({ name: 'All_Cleaned_Leads.xlsx', data: XLSX.write(wbAll, {bookType:'xlsx', type:'array'}) });
 
-                // Individual Tag files
                 for (let i = 1; i <= batchCount; i++) {
                     let tagRows = processedRows.filter(r => r['Tag'] === `Tag-${i}`);
                     let tagFiltered = tagRows.map(row => {
@@ -265,7 +279,6 @@
                     filesToDownload.push({ name: `Tag-${i}_Leads.xlsx`, data: XLSX.write(wbTag, {bookType:'xlsx', type:'array'}) });
                 }
 
-                // Render download buttons
                 filesToDownload.forEach(fileObj => {
                     let blob = new Blob([fileObj.data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                     let url = URL.createObjectURL(blob);
@@ -279,7 +292,7 @@
 
             } catch (error) {
                 console.error(error);
-                statusDiv.innerHTML = `❌ Error: ${error.message}`;
+                status_div.innerHTML = `❌ Error: ${error.message}`;
             }
         }
     </script>
