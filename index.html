@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sabhi Digital - Lead Cleaner & Batcher</title>
+    <title>Sabhi Digital - Lead Cleaner, VLOOKUP & Batcher</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 min-h-screen py-10 px-4">
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">🚀 Advanced Lead Cleaner (Mobile + Email Check)</h1>
-        <p class="text-gray-600 mb-6">Master sheet, L3 Exclusion sheet, aur Red Leads/DND sheet upload karein. Tool mobile aur email dono se cross-check karke clean files dega!</p>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">🚀 Advanced Lead Cleaner & Batcher</h1>
+        <p class="text-gray-600 mb-6">Master sheet, L3 Exclusion sheet, aur Red Leads/DND sheet upload karein. Tool Mobile aur Email dono se duplicates & exclusions remove karega!</p>
 
         <!-- File Uploads Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -46,7 +46,7 @@
 
         <!-- Column Selection Section -->
         <div id="columnSelectionContainer" class="mb-6 hidden bg-gray-50 p-4 rounded-xl border border-gray-200">
-            <label class="block font-semibold text-gray-800 mb-2 text-sm">Select Columns to Export:</label>
+            <label class="block font-semibold text-gray-800 mb-2 text-sm">Select Columns to Export (Mobile Number & WhatsApp Number auto-selected):</label>
             <div class="flex gap-2 mb-3">
                 <button type="button" onclick="selectAllCols(true)" class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded font-semibold hover:bg-blue-200">Select All</button>
                 <button type="button" onclick="selectAllCols(false)" class="text-xs bg-gray-200 text-gray-700 px-3 py-1 rounded font-semibold hover:bg-gray-300">Deselect All</button>
@@ -57,7 +57,7 @@
         </div>
 
         <button onclick="processLeads()" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition duration-200 shadow-md">
-            ⚡ Process Leads (Mobile + Email Check)
+            ⚡ Process Leads, Remove Duplicates & Generate Files
         </button>
 
         <div id="status" class="mt-4 text-center font-medium text-gray-700"></div>
@@ -92,16 +92,18 @@
                 if (globalMasterData.length > 0) {
                     masterColumns = Object.keys(globalMasterData[0]);
                     
-                    if (!masterColumns.includes('Formatted Number')) masterColumns.push('Formatted Number');
+                    // Add requested generated columns with exact names
+                    if (!masterColumns.includes('Mobile Number')) masterColumns.push('Mobile Number');
                     if (!masterColumns.includes('WhatsApp Number')) masterColumns.push('WhatsApp Number');
                     if (!masterColumns.includes('Tag')) masterColumns.push('Tag');
 
                     const container = document.getElementById('columnsCheckboxList');
                     container.innerHTML = '';
                     masterColumns.forEach(col => {
+                        let isAutoSelect = (col === 'Mobile Number' || col === 'WhatsApp Number' || col.toLowerCase().includes('name') || col.toLowerCase().includes('phone') || col.toLowerCase().includes('mobile'));
                         let div = document.createElement('div');
                         div.className = 'flex items-center space-x-2';
-                        div.innerHTML = `<input type="checkbox" value="${col}" checked class="col-checkbox rounded text-blue-600 focus:ring-blue-500 h-4 w-4">
+                        div.innerHTML = `<input type="checkbox" value="${col}" ${isAutoSelect ? 'checked' : ''} class="col-checkbox rounded text-blue-600 focus:ring-blue-500 h-4 w-4">
                                          <span class="text-sm text-gray-700 truncate" title="${col}">${col}</span>`;
                         container.appendChild(div);
                     });
@@ -116,7 +118,6 @@
             document.querySelectorAll('.col-checkbox').forEach(cb => cb.checked = status);
         }
 
-        // Helper to extract both Mobile sets and Email sets for exclusion
         async function getExclusionData(fileInput) {
             let excMobiles = new Set();
             let excEmails = new Set();
@@ -134,8 +135,7 @@
                         if (cleanMob) excMobiles.add(cleanMob);
                     }
                     if (kLower.includes('email') || kLower.includes('mail')) {
-                        let cleanEmail = val.toLowerCase();
-                        excEmails.add(cleanEmail);
+                        excEmails.add(val.toLowerCase());
                     }
                 }
             });
@@ -172,13 +172,12 @@
                 return;
             }
 
-            statusDiv.innerHTML = "⏳ Processing leads with Mobile & Email dual-check...";
+            statusDiv.innerHTML = "⏳ Processing leads, removing exclusions & duplicates...";
 
             try {
                 const l3Data = await getExclusionData(exclusionInput);
                 const redData = await getExclusionData(redLeadsInput);
 
-                // Combine L3 and Red leads into unified exclusion sets
                 let globalExcludedMobiles = new Set([...l3Data.excMobiles, ...redData.excMobiles]);
                 let globalExcludedEmails = new Set([...l3Data.excEmails, ...redData.excEmails]);
 
@@ -211,6 +210,8 @@
                 let selectedCols = Array.from(selectedCheckboxes).map(cb => cb.value);
 
                 let processedRows = [];
+                let seenMobiles = new Set();
+                let seenEmails = new Set();
                 let batchCount = 1;
                 let currentBatchSize = 0;
 
@@ -220,39 +221,49 @@
                     let rowEmail = emailKey ? String(row[emailKey] || '').trim().toLowerCase() : '';
 
                     if (tenDigit) {
-                        // Check exclusion by EITHER Mobile OR Email
-                        let isExcludedByMobile = tenDigit && globalExcludedMobiles.has(tenDigit);
+                        // 1. Exclusion check (Mobile or Email)
+                        let isExcludedByMobile = globalExcludedMobiles.has(tenDigit);
                         let isExcludedByEmail = rowEmail && globalExcludedEmails.has(rowEmail);
 
                         if (!isExcludedByMobile && !isExcludedByEmail) {
-                            let passDateFilter = true;
-                            if ((fromDate || toDate) && dateKey) {
-                                let rowDate = parseExcelDate(row[dateKey]);
-                                if (rowDate) {
-                                    if (fromDate && rowDate < fromDate) passDateFilter = false;
-                                    if (toDate && rowDate > toDate) passDateFilter = false;
-                                }
-                            }
+                            // 2. Strict Duplicate check (Mobile OR Email already seen)
+                            let isDuplicateMobile = seenMobiles.has(tenDigit);
+                            let isDuplicateEmail = rowEmail && seenEmails.has(rowEmail);
 
-                            if (passDateFilter) {
-                                if (currentBatchSize >= batchSize) {
-                                    batchCount++;
-                                    currentBatchSize = 0;
+                            if (!isDuplicateMobile && !isDuplicateEmail) {
+                                // 3. Date Filter check
+                                let passDateFilter = true;
+                                if ((fromDate || toDate) && dateKey) {
+                                    let rowDate = parseExcelDate(row[dateKey]);
+                                    if (rowDate) {
+                                        if (fromDate && rowDate < fromDate) passDateFilter = false;
+                                        if (toDate && rowDate > toDate) passDateFilter = false;
+                                    }
                                 }
-                                
-                                let newRow = { ...row };
-                                newRow['Formatted Number'] = tenDigit;
-                                newRow['WhatsApp Number'] = "91" + tenDigit;
-                                newRow['Tag'] = `Tag-${batchCount}`;
 
-                                processedRows.push(newRow);
-                                currentBatchSize++;
+                                if (passDateFilter) {
+                                    seenMobiles.add(tenDigit);
+                                    if (rowEmail) seenEmails.add(rowEmail);
+
+                                    if (currentBatchSize >= batchSize) {
+                                        batchCount++;
+                                        currentBatchSize = 0;
+                                    }
+                                    
+                                    let newRow = { ...row };
+                                    newRow['Mobile Number'] = tenDigit;
+                                    newRow['WhatsApp Number'] = "91" + tenDigit;
+                                    newRow['Tag'] = `Tag-${batchCount}`;
+
+                                    processedRows.push(newRow);
+                                    currentBatchSize++;
+                                }
                             }
                         }
                     }
                 });
 
-                statusDiv.innerHTML = `✅ Success! Processed ${processedRows.length} valid leads into ${batchCount} batches. Download files below:`;
+                statusDiv.innerHTML = `✅ Success! Processed ${processedRows.length} unique leads into ${batchCount} batches. Download files below:`;
 
                 let filesToDownload = [];
 
@@ -292,7 +303,7 @@
 
             } catch (error) {
                 console.error(error);
-                status_div.innerHTML = `❌ Error: ${error.message}`;
+                statusDiv.innerHTML = `❌ Error: ${error.message}`;
             }
         }
     </script>
