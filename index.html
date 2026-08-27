@@ -10,21 +10,27 @@
 <body class="bg-gray-50 min-h-screen py-10 px-4">
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8">
         <h1 class="text-3xl font-bold text-gray-800 mb-2">🚀 Advanced Lead Cleaner & Batcher</h1>
-        <p class="text-gray-600 mb-6">Master sheet, L3 Exclusion sheet, aur Red Leads/DND sheet upload karein. Detailed summary aur locked clean number columns ke sath files download karein!</p>
+        <p class="text-gray-600 mb-6">Master sheet, L3 Exclusion sheet, aur Red Leads/DND sheet upload karein. Locked mandatory columns (Mobile, WhatsApp, Name, Email) aur duplicate column alert ke sath files download karein!</p>
 
-        <!-- File Uploads Grid -->
+        <!-- File Uploads Grid with Color Highlights & Bold Labels -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center bg-blue-50/30">
-                <label class="block font-semibold text-gray-700 mb-2 text-sm">1. Master Sheet</label>
-                <input type="file" id="masterFile" accept=".xlsx, .xls, .csv" onchange="handleMasterUpload()" class="w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200">
+            <!-- Master Sheet: Blue Highlight -->
+            <div class="border-2 border-dashed border-blue-400 rounded-xl p-4 text-center bg-blue-50 shadow-sm">
+                <label class="block font-bold text-blue-900 mb-1 text-sm">1. Master Sheet</label>
+                <p class="text-xs text-blue-700 mb-2 font-bold">(Jin Leads ko messages bhejna hai VO yaha Upload kre)</p>
+                <input type="file" id="masterFile" accept=".xlsx, .xls, .csv" onchange="handleMasterUpload()" class="w-full text-xs text-gray-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-700">
             </div>
-            <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center bg-red-50/30">
-                <label class="block font-semibold text-gray-700 mb-2 text-sm">2. Exclusion / L3 Sheet (Opt.)</label>
-                <input type="file" id="exclusionFile" accept=".xlsx, .xls, .csv" class="w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-red-100 file:text-red-700 hover:file:bg-red-200">
+            <!-- Exclusion / L3 Sheet: Red/Rose Highlight -->
+            <div class="border-2 border-dashed border-red-400 rounded-xl p-4 text-center bg-red-50 shadow-sm">
+                <label class="block font-bold text-red-900 mb-1 text-sm">2. Exclusion / L3 Sheet (Opt.)</label>
+                <p class="text-xs text-red-700 mb-2 font-bold">(Jin Leads Ko remove krna hai VO yaha Upload kre)</p>
+                <input type="file" id="exclusionFile" accept=".xlsx, .xls, .csv" class="w-full text-xs text-gray-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-red-600 file:text-white hover:file:bg-red-700">
             </div>
-            <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center bg-orange-50/30">
-                <label class="block font-semibold text-gray-700 mb-2 text-sm">3. Red Leads / DND Sheet (Opt.)</label>
-                <input type="file" id="redLeadsFile" accept=".xlsx, .xls, .csv" class="w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-orange-100 file:text-orange-700 hover:file:bg-orange-200">
+            <!-- Red Leads / DND Sheet: Orange/Amber Highlight -->
+            <div class="border-2 border-dashed border-orange-400 rounded-xl p-4 text-center bg-orange-50 shadow-sm">
+                <label class="block font-bold text-orange-900 mb-1 text-sm">3. Red Leads / DND Sheet (Opt.)</label>
+                <p class="text-xs text-orange-700 mb-2 font-bold">(DND ya blocked leads yaha upload kre)</p>
+                <input type="file" id="redLeadsFile" accept=".xlsx, .xls, .csv" class="w-full text-xs text-gray-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-orange-600 file:text-white hover:file:bg-orange-700">
             </div>
         </div>
 
@@ -46,7 +52,7 @@
 
         <!-- Column Selection Section -->
         <div id="columnSelectionContainer" class="mb-6 hidden bg-gray-50 p-4 rounded-xl border border-gray-200">
-            <label class="block font-semibold text-gray-800 mb-2 text-sm">Select Columns to Export (Mobile & WhatsApp Numbers are locked & mandatory):</label>
+            <label class="block font-semibold text-gray-800 mb-2 text-sm">Select Columns to Export (Mobile, WhatsApp, Name & Email are locked & mandatory):</label>
             <div class="flex gap-2 mb-3">
                 <button type="button" onclick="selectAllCols(true)" class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded font-semibold hover:bg-blue-200">Select All</button>
                 <button type="button" onclick="selectAllCols(false)" class="text-xs bg-gray-200 text-gray-700 px-3 py-1 rounded font-semibold hover:bg-gray-300">Deselect All</button>
@@ -92,13 +98,34 @@
                 if (globalMasterData.length > 0) {
                     let rawColumns = Object.keys(globalMasterData[0]);
                     
-                    // Filter out old raw mobile/phone/whatsapp columns from master to prevent duplication
-                    masterColumns = rawColumns.filter(col => {
-                        let c = col.toLowerCase();
-                        return !(c === 'mobile' || c === 'phone' || c === 'whatsapp' || c === 'formatted number' || c === 'whatsapp number');
+                    let seenCols = new Set();
+                    let duplicateColsFound = [];
+                    rawColumns.forEach(col => {
+                        let colLower = col.toLowerCase().trim();
+                        if (seenCols.has(colLower)) {
+                            duplicateColsFound.push(col);
+                        } else {
+                            seenCols.add(colLower);
+                        }
                     });
 
-                    // Add tool's generated clean columns
+                    if (duplicateColsFound.length > 0) {
+                        alert("⚠️ Alert: Duplicate columns detected in Master Sheet (" + duplicateColsFound.join(", ") + "). We have excluded the duplicate copies from export!");
+                    }
+
+                    masterColumns = [];
+                    let uniqueCheck = new Set();
+                    rawColumns.forEach(col => {
+                        let c = col.toLowerCase().trim();
+                        if (c === 'mobile' || c === 'phone' || c === 'whatsapp' || c === 'formatted number' || c === 'whatsapp number' || c === 'tag') {
+                            return;
+                        }
+                        if (!uniqueCheck.has(c)) {
+                            uniqueCheck.add(c);
+                            masterColumns.push(col);
+                        }
+                    });
+
                     masterColumns.push('Mobile Number');
                     masterColumns.push('WhatsApp Number');
                     masterColumns.push('Tag');
@@ -106,8 +133,9 @@
                     const container = document.getElementById('columnsCheckboxList');
                     container.innerHTML = '';
                     masterColumns.forEach(col => {
-                        let isLocked = (col === 'Mobile Number' || col === 'WhatsApp Number');
-                        let isChecked = true; // All auto-selected by default
+                        let cLower = col.toLowerCase();
+                        let isLocked = (col === 'Mobile Number' || col === 'WhatsApp Number' || cLower.includes('name') || cLower.includes('email') || cLower.includes('mail'));
+                        let isChecked = true;
                         let div = document.createElement('div');
                         div.className = 'flex items-center space-x-2';
                         div.innerHTML = `<input type="checkbox" value="${col}" ${isChecked ? 'checked' : ''} ${isLocked ? 'disabled' : ''} class="col-checkbox rounded text-blue-600 focus:ring-blue-500 h-4 w-4">
@@ -190,7 +218,6 @@
                 let globalExcludedMobiles = new Set([...l3Data.excMobiles, ...redData.excMobiles]);
                 let globalExcludedEmails = new Set([...l3Data.excEmails, ...redData.excEmails]);
 
-                // Find mobile key in raw master data
                 let mobileKey = null;
                 let emailKey = null;
                 let dateKey = null;
@@ -216,10 +243,9 @@
                     return;
                 }
 
-                // Get selected columns (include disabled/locked ones explicitly since querySelectorAll('.col-checkbox:checked') won't catch disabled unless handled)
-                let selectedCols = ['Mobile Number', 'WhatsApp Number'];
+                let selectedCols = [];
                 document.querySelectorAll('.col-checkbox').forEach(cb => {
-                    if (cb.checked && cb.value !== 'Mobile Number' && cb.value !== 'WhatsApp Number') {
+                    if (cb.checked || cb.disabled) {
                         selectedCols.push(cb.value);
                     }
                 });
@@ -281,7 +307,6 @@
                     }
                     
                     let newRow = { ...row };
-                    // Ensure old raw mobile columns are cleaned/removed from output object
                     delete newRow[mobileKey];
                     
                     newRow['Mobile Number'] = tenDigit;
@@ -308,7 +333,9 @@
 
                 let allCleanedFiltered = processedRows.map(row => {
                     let filtered = {};
-                    selectedCols.forEach(col => filtered[col] = row[col] !== undefined ? row[col] : '');
+                    selectedCols.forEach(col => {
+                        filtered[col] = row[col] !== undefined ? row[col] : '';
+                    });
                     return filtered;
                 });
                 
@@ -320,7 +347,9 @@
                     let tagRows = processedRows.filter(r => r['Tag'] === `Tag-${i}`);
                     let tagFiltered = tagRows.map(row => {
                         let filtered = {};
-                        selectedCols.forEach(col => filtered[col] = row[col] !== undefined ? row[col] : '');
+                        selectedCols.forEach(col => {
+                            filtered[col] = row[col] !== undefined ? row[col] : '';
+                        });
                         return filtered;
                     });
 
